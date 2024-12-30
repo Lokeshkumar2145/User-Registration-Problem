@@ -2,7 +2,7 @@ import re
 
 # Patterns
 name_pattern = r"^[A-Z][a-zA-Z]{2,}$"
-email_pattern = r"^[a-zA-Z0-9._]+@[a-zA-Z]+\.[a-zA-Z]{2,}$"
+email_pattern = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z]+\.[a-zA-Z]{2,}$"
 phone_pattern = r"^\+\d{1,3} \d{10}$"
 password_pattern = r"^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':\"\\|,.<>\/?]).{8,}$"
 
@@ -27,7 +27,9 @@ def validate_phone(phone):
 
 def validate_password(password):
     if not re.match(password_pattern, password):
-        raise InvalidInput("Password must be at least 8 characters long, Atleast 1 Upper Case ,Atleast 1 special character and Atleast 1 Number")
+        if len(re.findall(r"[!@#$%^&*()_+{}\[\]:;<>,.?/~`\\|=]", password)) != 1:
+            raise InvalidInput("Password must have exactly one special character.")
+        raise InvalidInput("Password must be at least 8 characters long, contain at least 1 uppercase letter, and 1 numeric digit.")
     return f"Password is valid."
 
 if __name__ == "__main__":

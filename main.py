@@ -4,7 +4,7 @@ import re
 name_pattern = r"^[A-Z][a-zA-Z]{2,}$"
 email_pattern = r"^[a-zA-Z0-9._]+@[a-zA-Z]+\.[a-zA-Z]{2,}$"
 phone_pattern = r"^\+\d{1,3} \d{10}$"
-password_pattern = r".{8,}"
+password_pattern = r"^(?=.*[A-Z]).{8,}$"
 
 
 class InvalidInput(Exception):
